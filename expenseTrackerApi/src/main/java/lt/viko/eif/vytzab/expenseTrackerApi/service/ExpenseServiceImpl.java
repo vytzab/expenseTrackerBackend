@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.Expense;
-import lt.viko.eif.vytzab.expenseTrackerApi.exceptions.ExpenseNotFoundException;
+import lt.viko.eif.vytzab.expenseTrackerApi.exceptions.ResourceNotFoundException;
 import lt.viko.eif.vytzab.expenseTrackerApi.repository.IExpenseRepository;
 
 @Service
@@ -28,7 +28,7 @@ public class ExpenseServiceImpl implements IExpenseService {
 		if (expense.isPresent()) {
 			return expense.get();
 		}
-		throw new ExpenseNotFoundException("Expense is not found for the id " + id);
+		throw new ResourceNotFoundException("Expense is not found for the id " + id);
 	}
 
 	@Override

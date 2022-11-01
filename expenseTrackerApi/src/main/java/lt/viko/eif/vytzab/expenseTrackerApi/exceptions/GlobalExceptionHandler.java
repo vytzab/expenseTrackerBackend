@@ -12,8 +12,8 @@ import lt.viko.eif.vytzab.expenseTrackerApi.entity.ErrorObject;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	@ExceptionHandler(ExpenseNotFoundException.class)
-	public ResponseEntity<ErrorObject> handleExpenseNotFoundException(ExpenseNotFoundException ex, WebRequest request) {
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<ErrorObject> handleExpenseNotFoundException(ResourceNotFoundException ex, WebRequest request) {
 
 		ErrorObject errorObject = new ErrorObject();
 
