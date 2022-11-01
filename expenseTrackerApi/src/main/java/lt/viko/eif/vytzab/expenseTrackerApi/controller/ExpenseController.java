@@ -2,10 +2,12 @@ package lt.viko.eif.vytzab.expenseTrackerApi.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.Expense;
 import lt.viko.eif.vytzab.expenseTrackerApi.service.IExpenseService;
 
+@Validated
 @RestController
 public class ExpenseController {
 
@@ -42,7 +45,7 @@ public class ExpenseController {
 
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@PostMapping("/expenses")
-	public Expense saveExpense(@RequestBody Expense expense) {
+	public Expense saveExpense(@Valid @RequestBody Expense expense) {
 		return expenseService.saveExpense(expense);
 	}
 
