@@ -5,6 +5,7 @@ package lt.viko.eif.vytzab.expenseTrackerApi.entity;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,6 +44,14 @@ public class Expense {
 
 	private Date date;
 
+	@Column(name = "created_at", nullable = false, updatable = false)
+	@CreationTimestamp
+	private Timestamp createdAt;
+
+	@Column(name = "updated_at")
+	@UpdateTimestamp
+	private Timestamp updatedAt;
+
 	/**
 	 * @param id
 	 * @param name
@@ -47,8 +59,11 @@ public class Expense {
 	 * @param amount
 	 * @param category
 	 * @param date
+	 * @param createdAt
+	 * @param updatedAt
 	 */
-	public Expense(Long id, String name, String description, BigDecimal amount, String category, Date date) {
+	public Expense(Long id, String name, String description, BigDecimal amount, String category, Date date,
+			Timestamp createdAt, Timestamp updatedAt) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -56,6 +71,8 @@ public class Expense {
 		this.amount = amount;
 		this.category = category;
 		this.date = date;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 	}
 
 	/**
@@ -149,10 +166,39 @@ public class Expense {
 		this.date = date;
 	}
 
+	/**
+	 * @return the createdAt
+	 */
+	public Timestamp getCreatedAt() {
+		return createdAt;
+	}
+
+	/**
+	 * @param createdAt the createdAt to set
+	 */
+	public void setCreatedAt(Timestamp createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	/**
+	 * @return the updatedAt
+	 */
+	public Timestamp getUpdatedAt() {
+		return updatedAt;
+	}
+
+	/**
+	 * @param updatedAt the updatedAt to set
+	 */
+	public void setUpdatedAt(Timestamp updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
 	@Override
 	public String toString() {
 		return "Expense [id=" + id + ", name=" + name + ", description=" + description + ", amount=" + amount
-				+ ", category=" + category + ", date=" + date + "]";
+				+ ", category=" + category + ", date=" + date + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
+				+ "]";
 	}
 
 	@Override
@@ -179,6 +225,4 @@ public class Expense {
 			return false;
 		return true;
 	}
-	
-	
 }
