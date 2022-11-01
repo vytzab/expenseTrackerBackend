@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.Expense;
+import lt.viko.eif.vytzab.expenseTrackerApi.exceptions.ExpenseNotFoundException;
 import lt.viko.eif.vytzab.expenseTrackerApi.repository.IExpenseRepository;
 
 @Service
@@ -27,7 +28,7 @@ public class ExpenseServiceImpl implements IExpenseService {
 		if (expense.isPresent()) {
 			return expense.get();
 		}
-		throw new RuntimeException("Expense is not found for the id " + id);
+		throw new ExpenseNotFoundException("Expense is not found for the id " + id);
 	}
 
 	@Override
@@ -44,8 +45,10 @@ public class ExpenseServiceImpl implements IExpenseService {
 	public Expense updateExpense(Long id, Expense expense) {
 		Expense existingExpense = getExpenseById(id);
 		existingExpense.setName(expense.getName() != null ? expense.getName() : existingExpense.getName());
-		existingExpense.setDescription(expense.getDescription() != null ? expense.getDescription() : existingExpense.getDescription());
-		existingExpense.setCategory(expense.getCategory() != null ? expense.getCategory() : existingExpense.getCategory());
+		existingExpense.setDescription(
+				expense.getDescription() != null ? expense.getDescription() : existingExpense.getDescription());
+		existingExpense
+				.setCategory(expense.getCategory() != null ? expense.getCategory() : existingExpense.getCategory());
 		existingExpense.setAmount(expense.getAmount() != null ? expense.getAmount() : existingExpense.getAmount());
 		existingExpense.setDate(expense.getDate() != null ? expense.getDate() : existingExpense.getDate());
 		return expenseRepo.save(existingExpense);
