@@ -1,5 +1,6 @@
 package lt.viko.eif.vytzab.expenseTrackerApi.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -14,14 +15,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.Expense;
 import lt.viko.eif.vytzab.expenseTrackerApi.service.IExpenseService;
 
-@Validated
 @RestController
+@Validated
 public class ExpenseController {
 
 	@Autowired
@@ -50,7 +52,23 @@ public class ExpenseController {
 	}
 
 	@PutMapping("/expenses/{id}")
-	public Expense updateExpense(@PathVariable Long id, @RequestBody Expense expense) {
+	public Expense updateExpense(@RequestBody Expense expense, @PathVariable Long id) {
 		return expenseService.updateExpense(id, expense);
+	}
+
+	@GetMapping("/expenses/category")
+	public List<Expense> getExpensesByCategory(@RequestParam String category, Pageable page) {
+		return expenseService.readByCategory(category, page);
+	}
+
+	@GetMapping("/expenses/name")
+	public List<Expense> getExpensesByName(@RequestParam String name, Pageable page) {
+		return expenseService.readByName(name, page);
+	}
+
+	@GetMapping("/expenses/date")
+	public List<Expense> getExpensesByDate(@RequestParam(required = false) Date startDate,
+			@RequestParam(required = false) Date endDate, Pageable page) {
+		return expenseService.readByDate(startDate, endDate, page);
 	}
 }

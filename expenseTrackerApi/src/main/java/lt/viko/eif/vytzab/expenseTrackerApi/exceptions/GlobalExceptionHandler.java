@@ -71,7 +71,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 				.map(x -> x.getDefaultMessage())
 				.collect(Collectors.toList());
 		body.put("messages", errors);
-		
+
 		return new ResponseEntity<Object>(body, HttpStatus.BAD_REQUEST);
 	}
 }
