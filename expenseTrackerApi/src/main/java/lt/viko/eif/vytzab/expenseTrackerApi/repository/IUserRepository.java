@@ -7,5 +7,7 @@ import lt.viko.eif.vytzab.expenseTrackerApi.entity.User;
 
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
+	
+	Boolean existsByEmail(String email);
 
 }

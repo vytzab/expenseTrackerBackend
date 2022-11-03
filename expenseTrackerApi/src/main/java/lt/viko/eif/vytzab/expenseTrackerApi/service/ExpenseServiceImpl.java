@@ -20,7 +20,12 @@ public class ExpenseServiceImpl implements IExpenseService {
 	private IExpenseRepository expenseRepo;
 
 	@Override
-	public Page<Expense> getAllExpenses(Pageable page) {
+	public Expense saveExpense(Expense expense) {
+		return expenseRepo.save(expense);
+	}
+
+	@Override
+	public Page<Expense> getExpenses(Pageable page) {
 		return expenseRepo.findAll(page);
 	}
 
@@ -34,17 +39,6 @@ public class ExpenseServiceImpl implements IExpenseService {
 	}
 
 	@Override
-	public void deleteExpenseById(Long id) {
-		Expense expense = getExpenseById(id);
-		expenseRepo.delete(expense);
-	}
-
-	@Override
-	public Expense saveExpense(Expense expense) {
-		return expenseRepo.save(expense);
-	}
-
-	@Override
 	public Expense updateExpense(Long id, Expense expense) {
 		Expense existingExpense = getExpenseById(id);
 		existingExpense.setName(expense.getName() != null ? expense.getName() : existingExpense.getName());
@@ -55,6 +49,12 @@ public class ExpenseServiceImpl implements IExpenseService {
 		existingExpense.setAmount(expense.getAmount() != null ? expense.getAmount() : existingExpense.getAmount());
 		existingExpense.setDate(expense.getDate() != null ? expense.getDate() : existingExpense.getDate());
 		return expenseRepo.save(existingExpense);
+	}
+
+	@Override
+	public void deleteExpenseById(Long id) {
+		Expense expense = getExpenseById(id);
+		expenseRepo.delete(expense);
 	}
 
 	@Override

@@ -29,9 +29,15 @@ public class ExpenseController {
 	@Autowired
 	private IExpenseService expenseService;
 
+	@ResponseStatus(value = HttpStatus.CREATED)
+	@PostMapping("/expenses")
+	public Expense saveExpense(@Valid @RequestBody Expense expense) {
+		return expenseService.saveExpense(expense);
+	}
+
 	@GetMapping("/expenses")
 	public List<Expense> getAllExpenses(Pageable page) {
-		return expenseService.getAllExpenses(page).toList();
+		return expenseService.getExpenses(page).toList();
 	}
 
 	@GetMapping("/expenses/{id}")
@@ -39,21 +45,15 @@ public class ExpenseController {
 		return expenseService.getExpenseById(id);
 	}
 
+	@PutMapping("/expenses/{id}")
+	public Expense updateExpense(@RequestBody Expense expense, @PathVariable Long id) {
+		return expenseService.updateExpense(id, expense);
+	}
+
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	@DeleteMapping("/expenses/{id}")
 	public void deleteExpenseById(@PathVariable Long id) {
 		expenseService.deleteExpenseById(id);
-	}
-
-	@ResponseStatus(value = HttpStatus.CREATED)
-	@PostMapping("/expenses")
-	public Expense saveExpense(@Valid @RequestBody Expense expense) {
-		return expenseService.saveExpense(expense);
-	}
-
-	@PutMapping("/expenses/{id}")
-	public Expense updateExpense(@RequestBody Expense expense, @PathVariable Long id) {
-		return expenseService.updateExpense(id, expense);
 	}
 
 	@GetMapping("/expenses/category")

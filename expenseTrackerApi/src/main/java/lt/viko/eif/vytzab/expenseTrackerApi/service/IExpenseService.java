@@ -17,15 +17,15 @@ import lt.viko.eif.vytzab.expenseTrackerApi.entity.Expense;
  */
 public interface IExpenseService {
 
-	Page<Expense> getAllExpenses(Pageable page);
+	Expense saveExpense(Expense expense);
+
+	Page<Expense> getExpenses(Pageable page);
 
 	Expense getExpenseById(Long id);
 
-	void deleteExpenseById(Long id);
-
-	Expense saveExpense(Expense expense);
-
 	Expense updateExpense(Long id, Expense expense);
+
+	void deleteExpenseById(Long id);
 	
 	List<Expense> readByCategory(String category, Pageable page);
 	

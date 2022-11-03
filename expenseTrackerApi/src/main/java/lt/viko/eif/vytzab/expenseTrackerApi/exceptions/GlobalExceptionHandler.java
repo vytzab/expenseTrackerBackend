@@ -58,6 +58,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@ExceptionHandler(ItemAlreadyExistsException.class)
+	public ResponseEntity<ErrorObject> handleItemExistsException(ItemAlreadyExistsException ex, WebRequest request) {
+		
+		ErrorObject errorObject = new ErrorObject();
+
+		errorObject.setStatusCode(HttpStatus.CONFLICT.value());
+		errorObject.setMessage(ex.getMessage());
+		errorObject.setTimestamp(new Date());
+		
+		return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.CONFLICT);
+	}
+
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -65,10 +77,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 		body.put("timestamp", new Date());
 		body.put("statusCode", HttpStatus.BAD_REQUEST.value());
-		List<String> errors = ex.getBindingResult()
-				.getFieldErrors()
-				.stream()
-				.map(x -> x.getDefaultMessage())
+		List<String> errors = ex.getBindingResult().getFieldErrors().stream().map(x -> x.getDefaultMessage())
 				.collect(Collectors.toList());
 		body.put("messages", errors);
 
