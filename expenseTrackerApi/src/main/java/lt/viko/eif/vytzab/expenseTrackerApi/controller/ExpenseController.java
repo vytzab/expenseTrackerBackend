@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +22,6 @@ import lt.viko.eif.vytzab.expenseTrackerApi.entity.Expense;
 import lt.viko.eif.vytzab.expenseTrackerApi.service.IExpenseService;
 
 @RestController
-@Validated
 public class ExpenseController {
 
 	@Autowired
@@ -31,12 +29,12 @@ public class ExpenseController {
 
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@PostMapping("/expenses")
-	public Expense saveExpense(@Valid @RequestBody Expense expense) {
-		return expenseService.saveExpense(expense);
+	public Expense createExpense(@Valid @RequestBody Expense expense) {
+		return expenseService.createExpense(expense);
 	}
 
 	@GetMapping("/expenses")
-	public List<Expense> getAllExpenses(Pageable page) {
+	public List<Expense> getExpenses(Pageable page) {
 		return expenseService.getExpenses(page).toList();
 	}
 
@@ -62,8 +60,8 @@ public class ExpenseController {
 	}
 
 	@GetMapping("/expenses/name")
-	public List<Expense> getExpensesByName(@RequestParam String name, Pageable page) {
-		return expenseService.readByName(name, page);
+	public List<Expense> getExpensesByName(@RequestParam String keyword, Pageable page) {
+		return expenseService.readByName(keyword, page);
 	}
 
 	@GetMapping("/expenses/date")

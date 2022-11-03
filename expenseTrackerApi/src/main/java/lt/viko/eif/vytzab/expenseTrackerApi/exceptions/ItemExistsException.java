@@ -1,10 +1,10 @@
 package lt.viko.eif.vytzab.expenseTrackerApi.exceptions;
 
-public class ItemAlreadyExistsException extends RuntimeException {
+public class ItemExistsException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	
-	public ItemAlreadyExistsException(String message) {
+	public ItemExistsException(String message) {
 		super(message);
 	}
 }

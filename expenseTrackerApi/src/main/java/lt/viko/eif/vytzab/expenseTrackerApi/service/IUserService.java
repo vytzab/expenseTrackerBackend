@@ -1,20 +1,17 @@
 package lt.viko.eif.vytzab.expenseTrackerApi.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.User;
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.UserModel;
 
 public interface IUserService {
 
-	User saveUser(UserModel user);
+	User createUser(UserModel userModel);
 
-	Page<User> getUsers(Pageable page);
+	User readUser();
 
-	User getUserById(Long id);
+	User updateUser(UserModel userModel);
 
-	User updateUser(UserModel user, Long id);
+	void deleteUser();
 
-	void deleteUserById(Long id);
+	User getLoggedInUser();
 }

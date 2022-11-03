@@ -15,13 +15,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name =  "tbl_users")
+@Table(name = "tbl_users")
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String name;
 
 	@Column(unique = true)
@@ -31,12 +31,12 @@ public class User {
 	private String password;
 
 	private Long age;
-	
-	@Column(name="created_at", nullable = false, updatable = false)
+
+	@Column(name = "created_at", nullable = false, updatable = false)
 	@CreationTimestamp
 	private Timestamp created_at;
-	
-	@Column(name="updated_at", nullable = false, updatable = false)
+
+	@Column(name = "updated_at", nullable = false, updatable = false)
 	@UpdateTimestamp
 	private Timestamp updated_at;
 
@@ -197,5 +197,4 @@ public class User {
 		return true;
 	}
 
-	
 }

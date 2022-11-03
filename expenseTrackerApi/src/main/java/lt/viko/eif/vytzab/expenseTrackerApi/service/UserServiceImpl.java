@@ -2,14 +2,15 @@ package lt.viko.eif.vytzab.expenseTrackerApi.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.User;
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.UserModel;
-import lt.viko.eif.vytzab.expenseTrackerApi.exceptions.ItemAlreadyExistsException;
+import lt.viko.eif.vytzab.expenseTrackerApi.exceptions.ItemExistsException;
 import lt.viko.eif.vytzab.expenseTrackerApi.exceptions.ResourceNotFoundException;
 import lt.viko.eif.vytzab.expenseTrackerApi.repository.IUserRepository;
 
@@ -23,9 +24,9 @@ public class UserServiceImpl implements IUserService {
 	private PasswordEncoder bcryptEncoder;
 
 	@Override
-	public User saveUser(UserModel userModel) {
+	public User createUser(UserModel userModel) {
 		if (userRepo.existsByEmail(userModel.getEmail())) {
-			throw new ItemAlreadyExistsException("User is already registered with email: " + userModel.getEmail());
+			throw new ItemExistsException("User is already registered with email: " + userModel.getEmail());
 		}
 		User user = new User();
 		BeanUtils.copyProperties(userModel, user);
@@ -34,19 +35,14 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public Page<User> getUsers(Pageable page) {
-		return userRepo.findAll(page);
+	public User readUser() {
+		return userRepo.findById(getLoggedInUser().getId()).orElseThrow(
+				() -> new ResourceNotFoundException("User not found for the id: " + getLoggedInUser().getId()));
 	}
 
 	@Override
-	public User getUserById(Long id) throws ResourceNotFoundException {
-		return userRepo.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("User not found for the id: " + id));
-	}
-
-	@Override
-	public User updateUser(UserModel userModel, Long id) {
-		User user = getUserById(id);
+	public User updateUser(UserModel userModel) {
+		User user = readUser();
 		user.setName(userModel.getName() != null ? userModel.getName() : user.getName());
 		user.setEmail(userModel.getEmail() != null ? userModel.getEmail() : user.getEmail());
 		user.setPassword(userModel.getPassword() != null ? userModel.getPassword() : user.getPassword());
@@ -56,9 +52,17 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void deleteUserById(Long id) {
-		User user = getUserById(id);
+	public void deleteUser() {
+		User user = readUser();
 		userRepo.delete(user);
+	}
+
+	@Override
+	public User getLoggedInUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String email = authentication.getName();
+		return userRepo.findByEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException("User not found for email " + email));
 	}
 
 }

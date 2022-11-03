@@ -10,7 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.ErrorObject;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<ErrorObject> handleResourceNotFoundException(ResourceNotFoundException ex,
@@ -58,15 +58,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@ExceptionHandler(ItemAlreadyExistsException.class)
-	public ResponseEntity<ErrorObject> handleItemExistsException(ItemAlreadyExistsException ex, WebRequest request) {
-		
+	@ExceptionHandler(ItemExistsException.class)
+	public ResponseEntity<ErrorObject> handleItemExistsException(ItemExistsException ex, WebRequest request) {
+
 		ErrorObject errorObject = new ErrorObject();
 
 		errorObject.setStatusCode(HttpStatus.CONFLICT.value());
 		errorObject.setMessage(ex.getMessage());
 		errorObject.setTimestamp(new Date());
-		
+
 		return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.CONFLICT);
 	}
 
@@ -75,11 +75,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		Map<String, Object> body = new HashMap<String, Object>();
 
-		body.put("timestamp", new Date());
 		body.put("statusCode", HttpStatus.BAD_REQUEST.value());
 		List<String> errors = ex.getBindingResult().getFieldErrors().stream().map(x -> x.getDefaultMessage())
 				.collect(Collectors.toList());
 		body.put("messages", errors);
+		body.put("timestamp", new Date());
 
 		return new ResponseEntity<Object>(body, HttpStatus.BAD_REQUEST);
 	}

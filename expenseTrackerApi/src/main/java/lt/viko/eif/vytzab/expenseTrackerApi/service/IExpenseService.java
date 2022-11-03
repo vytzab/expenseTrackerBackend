@@ -17,7 +17,7 @@ import lt.viko.eif.vytzab.expenseTrackerApi.entity.Expense;
  */
 public interface IExpenseService {
 
-	Expense saveExpense(Expense expense);
+	Expense createExpense(Expense expense);
 
 	Page<Expense> getExpenses(Pageable page);
 

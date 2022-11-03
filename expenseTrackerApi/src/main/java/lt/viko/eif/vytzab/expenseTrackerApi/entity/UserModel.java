@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class UserModel {
-	
+
 	@NotBlank(message = "Name should not be empty")
 	private String name;
 

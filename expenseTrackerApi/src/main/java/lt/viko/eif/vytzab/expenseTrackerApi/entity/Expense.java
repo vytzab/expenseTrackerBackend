@@ -9,16 +9,23 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Vytautas
@@ -42,10 +49,10 @@ public class Expense {
 	@NotNull(message = "Expense amount must not be null")
 	private BigDecimal amount;
 
-	@NotBlank(message = "Expense category must not be blank")
+	@NotBlank(message = "Category must not be blank")
 	private String category;
 
-	@NotNull(message = "Expense date must not be null")
+	@NotNull(message = "Date must not be null")
 	private Date date;
 
 	@Column(name = "created_at", nullable = false, updatable = false)
@@ -56,6 +63,12 @@ public class Expense {
 	@UpdateTimestamp
 	private Timestamp updatedAt;
 
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "user_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	private User user;
+
 	/**
 	 * @param id
 	 * @param name
@@ -65,9 +78,14 @@ public class Expense {
 	 * @param date
 	 * @param createdAt
 	 * @param updatedAt
+	 * @param user
 	 */
-	public Expense(Long id, String name, String description, BigDecimal amount, String category, Date date,
-			Timestamp createdAt, Timestamp updatedAt) {
+	public Expense(Long id,
+			@NotNull(message = "Expense name must not be null") @Size(min = 3, message = "Expense name must be at least 3 characters.") String name,
+			String description, @NotNull(message = "Expense amount must not be null") BigDecimal amount,
+			@NotBlank(message = "Expense category must not be blank") String category,
+			@NotNull(message = "Expense date must not be null") Date date, Timestamp createdAt, Timestamp updatedAt,
+			User user) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -77,6 +95,7 @@ public class Expense {
 		this.date = date;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		this.user = user;
 	}
 
 	/**
@@ -203,11 +222,25 @@ public class Expense {
 		this.updatedAt = updatedAt;
 	}
 
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
 		return "Expense [id=" + id + ", name=" + name + ", description=" + description + ", amount=" + amount
 				+ ", category=" + category + ", date=" + date + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
-				+ "]";
+				+ ", user=" + user + "]";
 	}
 
 	@Override
