@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.User;
@@ -18,6 +19,9 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	private IUserRepository userRepo;
 
+	@Autowired
+	private PasswordEncoder bcryptEncoder;
+
 	@Override
 	public User saveUser(UserModel userModel) {
 		if (userRepo.existsByEmail(userModel.getEmail())) {
@@ -25,6 +29,7 @@ public class UserServiceImpl implements IUserService {
 		}
 		User user = new User();
 		BeanUtils.copyProperties(userModel, user);
+		user.setPassword(bcryptEncoder.encode(user.getPassword()));
 		return userRepo.save(user);
 	}
 
@@ -34,18 +39,20 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public User getUserById(Long id) throws ResourceNotFoundException{
-		return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found for the id: " + id));
+	public User getUserById(Long id) throws ResourceNotFoundException {
+		return userRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("User not found for the id: " + id));
 	}
 
 	@Override
-	public User updateUser(UserModel user, Long id) {
-		User existingUser = getUserById(id);
-		existingUser.setName(user.getName() != null ? user.getName() : existingUser.getName());
-		existingUser.setEmail(user.getEmail() != null ? user.getEmail() : existingUser.getEmail());
-		existingUser.setPassword(user.getPassword() != null ? user.getPassword() : existingUser.getPassword());
-		existingUser.setAge(user.getAge() != null ? user.getAge() : existingUser.getAge());
-		return userRepo.save(existingUser);
+	public User updateUser(UserModel userModel, Long id) {
+		User user = getUserById(id);
+		user.setName(userModel.getName() != null ? userModel.getName() : user.getName());
+		user.setEmail(userModel.getEmail() != null ? userModel.getEmail() : user.getEmail());
+		user.setPassword(userModel.getPassword() != null ? userModel.getPassword() : user.getPassword());
+		user.setAge(userModel.getAge() != null ? userModel.getAge() : user.getAge());
+		user.setPassword(bcryptEncoder.encode(user.getPassword()));
+		return userRepo.save(user);
 	}
 
 	@Override
