@@ -14,7 +14,7 @@ import lt.viko.eif.vytzab.expenseTrackerApi.entity.User;
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.UserModel;
 import lt.viko.eif.vytzab.expenseTrackerApi.service.IUserService;
 
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin
 @RestController
 public class UserController {
 

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.Expense;
 import lt.viko.eif.vytzab.expenseTrackerApi.service.IExpenseService;
 
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin
 @RestController
 public class ExpenseController {
 
