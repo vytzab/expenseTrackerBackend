@@ -1,7 +1,12 @@
 package lt.viko.eif.vytzab.expenseTrackerApi.entity;
 
+/**
+ * @author Vytautas
+ *
+ *         Class for the <JwtResponse> entity implementation.
+ */
 public class JwtResponse {
-	
+
 	private final String jwtToken;
 
 	/**
@@ -18,5 +23,5 @@ public class JwtResponse {
 	public String getJwtToken() {
 		return jwtToken;
 	}
-	
+
 }

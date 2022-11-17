@@ -1,0 +1,9 @@
+lt.viko.eif.vytzab.expenseTrackerApi
+lt.viko.eif.vytzab.expenseTrackerApi.config
+lt.viko.eif.vytzab.expenseTrackerApi.controller
+lt.viko.eif.vytzab.expenseTrackerApi.entity
+lt.viko.eif.vytzab.expenseTrackerApi.exceptions
+lt.viko.eif.vytzab.expenseTrackerApi.repositories
+lt.viko.eif.vytzab.expenseTrackerApi.security
+lt.viko.eif.vytzab.expenseTrackerApi.services
+lt.viko.eif.vytzab.expenseTrackerApi.util

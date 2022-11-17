@@ -12,8 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.User;
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.UserModel;
-import lt.viko.eif.vytzab.expenseTrackerApi.service.IUserService;
+import lt.viko.eif.vytzab.expenseTrackerApi.services.IUserService;
 
+/**
+ * @author Vytautas
+ *
+ *         Class for the <User> methods REST implementation.
+ */
 @CrossOrigin
 @RestController
 public class UserController {

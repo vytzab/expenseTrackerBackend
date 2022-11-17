@@ -5,6 +5,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+/**
+ * @author Vytautas
+ *
+ *         Class for the <UserModel> entity implementation.
+ */
 public class UserModel {
 
 	@NotBlank(message = "Name should not be empty")

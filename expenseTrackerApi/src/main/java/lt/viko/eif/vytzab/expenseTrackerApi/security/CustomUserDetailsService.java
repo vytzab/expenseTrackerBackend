@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.User;
-import lt.viko.eif.vytzab.expenseTrackerApi.repository.IUserRepository;
+import lt.viko.eif.vytzab.expenseTrackerApi.repositories.IUserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {

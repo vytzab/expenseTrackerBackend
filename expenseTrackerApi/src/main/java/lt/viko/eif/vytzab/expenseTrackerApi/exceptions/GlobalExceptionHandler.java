@@ -18,6 +18,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.ErrorObject;
 
+/**
+ * @author Vytautas
+ *
+ *         Class for the GlobalExceptionHandler implementation.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(ResourceNotFoundException.class)

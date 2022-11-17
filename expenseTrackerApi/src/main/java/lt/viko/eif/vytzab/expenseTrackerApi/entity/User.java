@@ -14,6 +14,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * @author Vytautas
+ *
+ *         Class for the <User> entity implementation.
+ */
 @Entity
 @Table(name = "tbl_users")
 public class User {

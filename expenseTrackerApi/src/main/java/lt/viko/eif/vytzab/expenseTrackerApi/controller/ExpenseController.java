@@ -20,8 +20,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.Expense;
-import lt.viko.eif.vytzab.expenseTrackerApi.service.IExpenseService;
+import lt.viko.eif.vytzab.expenseTrackerApi.services.IExpenseService;
 
+/**
+ * @author Vytautas
+ *
+ *         Class for the <Expense> methods REST implementation.
+ */
 @CrossOrigin
 @RestController
 public class ExpenseController {

@@ -2,6 +2,11 @@ package lt.viko.eif.vytzab.expenseTrackerApi.entity;
 
 import java.util.Date;
 
+/**
+ * @author Vytautas
+ *
+ *         Class for the <ErrorObject> entity implementation.
+ */
 public class ErrorObject {
 	private Integer statusCode;
 	private String message;

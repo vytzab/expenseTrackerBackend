@@ -1,5 +1,10 @@
 package lt.viko.eif.vytzab.expenseTrackerApi.entity;
 
+/**
+ * @author Vytautas
+ *
+ *         Class for the <AuthModel> entity implementation.
+ */
 public class AuthModel {
 
 	private String email;

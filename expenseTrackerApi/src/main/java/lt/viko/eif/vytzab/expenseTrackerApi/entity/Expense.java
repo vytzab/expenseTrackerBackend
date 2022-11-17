@@ -30,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * @author Vytautas
  *
+ *         Class for the <Expense> entity implementation.
  */
 @Entity
 @Table(name = "tbl_expenses")

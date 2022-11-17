@@ -17,6 +17,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import lt.viko.eif.vytzab.expenseTrackerApi.security.CustomUserDetailsService;
 import lt.viko.eif.vytzab.expenseTrackerApi.security.JwtRequestFilter;
 
+/**
+ * @author Vytautas
+ *
+ *         Class for the web security configuration
+ */
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired

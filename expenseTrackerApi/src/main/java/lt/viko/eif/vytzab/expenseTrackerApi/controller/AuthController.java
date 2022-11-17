@@ -8,8 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +18,14 @@ import lt.viko.eif.vytzab.expenseTrackerApi.entity.JwtResponse;
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.User;
 import lt.viko.eif.vytzab.expenseTrackerApi.entity.UserModel;
 import lt.viko.eif.vytzab.expenseTrackerApi.security.CustomUserDetailsService;
-import lt.viko.eif.vytzab.expenseTrackerApi.service.IUserService;
+import lt.viko.eif.vytzab.expenseTrackerApi.services.IUserService;
 import lt.viko.eif.vytzab.expenseTrackerApi.util.JwtTokenUtil;
 
+/**
+ * @author Vytautas
+ *
+ *         Class for the authentication implementation.
+ */
 @CrossOrigin
 @RestController
 public class AuthController {
