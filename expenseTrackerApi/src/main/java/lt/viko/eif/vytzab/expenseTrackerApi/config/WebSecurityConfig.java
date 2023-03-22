@@ -35,14 +35,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http
-			.csrf().disable()
-			.cors().disable()
-			.authorizeRequests()
-			.antMatchers("/login", "/register")
-			.permitAll().anyRequest().authenticated()
-			.and()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.csrf().disable().cors().disable().authorizeRequests().antMatchers("/login", "/register").permitAll()
+				.anyRequest().authenticated().and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 		http.httpBasic();
 	}
@@ -51,17 +46,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);
 	}
-	
+
 	@Override
 	public void configure(WebSecurity webSecurity) throws Exception {
-		webSecurity
-			.ignoring()
-			.antMatchers(HttpMethod.POST, "/**")
-			.antMatchers(HttpMethod.OPTIONS, "/**")
-			.and()
-			.ignoring().antMatchers(HttpMethod.GET, "/**")
-			.and()
-			.ignoring().antMatchers(HttpMethod.DELETE, "/**");
+		webSecurity.ignoring().antMatchers(HttpMethod.POST, "/**").antMatchers(HttpMethod.OPTIONS, "/**").and()
+				.ignoring().antMatchers(HttpMethod.GET, "/**").and().ignoring().antMatchers(HttpMethod.DELETE, "/**");
 	}
 
 	@Bean
